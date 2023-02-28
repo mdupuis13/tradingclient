@@ -1,0 +1,3 @@
+[submodule "lib/j-questrade"]
+	path = lib/j-questrade
+	url = git@github.com:mdupuis13/j-questrade.git
