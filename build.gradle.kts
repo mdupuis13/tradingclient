@@ -1,12 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.0.2"
+	id("org.springframework.boot") version "3.0.3"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("com.github.ben-manes.versions") version "0.46.0"
 	kotlin("jvm") version "1.8.10"
 	kotlin("plugin.spring") version "1.8.10"
 	kotlin("plugin.jpa") version "1.8.10"
+	kotlin("kapt") version "1.8.10"
 }
 
 group = "info.martindupuis"
@@ -32,6 +33,8 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
