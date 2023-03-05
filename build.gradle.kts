@@ -4,10 +4,12 @@ plugins {
 	id("org.springframework.boot") version "3.0.3"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("com.github.ben-manes.versions") version "0.46.0"
-	kotlin("jvm") version "1.6.21"
-	kotlin("plugin.spring") version "1.6.21"
-	kotlin("plugin.jpa") version "1.6.21"
-	kotlin("kapt") version "1.6.21"
+	id("org.flywaydb.flyway") version "9.8.1"
+
+	kotlin("jvm") version "1.8.10"
+	kotlin("plugin.spring") version "1.8.10"
+	kotlin("plugin.jpa") version "1.8.10"
+	kotlin("kapt") version "1.8.10"
 }
 
 group = "info.martindupuis"
@@ -32,8 +34,11 @@ dependencies {
 	
 	implementation(project(":lib:j-questrade"))
 
+	runtimeOnly("org.postgresql:postgresql")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("com.h2database:h2")
+	
+	testImplementation("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 

@@ -1,0 +1,20 @@
+{
+    "activities": [
+      {
+        "tradeDate": "2016-01-08T00:00:00.000000-05:00",
+        "transactionDate": "2016-01-08T00:00:00.000000-05:00",
+        "settlementDate": "2016-01-08T00:00:00.000000-05:00",
+        "action": "DIV",
+        "symbol": "URA",
+        "symbolId": 11848816,
+        "description": "GLOBAL X FUNDS                 GLOBAL X URANIUM ETF           CASH DIV  ON      27 SHS       REC 12/31/15 PAY 01/08/16  ",
+        "currency": "USD",
+        "quantity": 0,
+        "price": 0,
+        "grossAmount": 0,
+        "commission": 0,
+        "netAmount": 6.29,
+        "type": "Dividends"
+      }
+    ]
+  }

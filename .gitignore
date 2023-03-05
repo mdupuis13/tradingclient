@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### debug log ###
+hs_err_*.log

@@ -1,0 +1,21 @@
+{
+  "accounts": [
+    {
+      "type": "TFSA",
+      "number": "51580807",
+      "status": "Active",
+      "isPrimary": true,
+      "isBilling": true,
+      "clientAccountType": "Individual"
+    },
+    {
+      "type": "RRSP",
+      "number": "51580808",
+      "status": "Active",
+      "isPrimary": false,
+      "isBilling": false,
+      "clientAccountType": "Individual"
+    }
+  ],
+  "userId": 248581
+}

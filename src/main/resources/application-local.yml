@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:6432/tradingclient
+    username: postgres
+    password: vdhyd
+  flyway:
+    locations:
+    - db/migration/postgresql
