@@ -1,0 +1,16 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "questrade-api",
+    "dateExported": "2023-03-06T02:56:16.398Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "api-server",
+            "value": "https://api02.iq.questrade.com/"
+        },
+        {
+            "name": "access-token",
+            "value": ""
+        }
+    ]
+}

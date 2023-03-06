@@ -1,0 +1,398 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Questrade",
+    "dateExported": "2023-03-06T02:57:39.170Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "60484747-af97-44a4-a04c-dd2f26b8ddeb",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "Get Auth token",
+            "url": "https://login.questrade.com/oauth2/token?grant_type=refresh_token&refresh_token",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-05-16T00:28:15.322Z",
+            "modified": "2023-03-06T02:57:31.508Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "grant_type",
+                    "value": "refresh_token",
+                    "isPath": false
+                },
+                {
+                    "name": "refresh_token",
+                    "value": "",
+                    "isPath": false
+                }
+            ],
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.api_server",
+                    "action": "setto",
+                    "value": "{{api-server}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.access_token",
+                    "action": "setto",
+                    "value": "{{access-token}}"
+                }
+            ]
+        },
+        {
+            "_id": "996fd18d-2ff4-4d21-ae46-6a2922d237e2",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "Get accounts",
+            "url": "v1/accounts",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2022-08-30T00:09:26.469Z",
+            "modified": "2023-03-04T14:36:27.332Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9f9b5d29-b599-4f07-9d5b-86fcb04d462b",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "RRSP Positions",
+            "url": "v1/accounts/51580808/positions",
+            "method": "GET",
+            "sortNum": 30625,
+            "created": "2022-08-30T00:19:41.852Z",
+            "modified": "2023-03-04T14:38:54.558Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "66730a1b-ac24-41ba-9eac-f9999986fac3",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "TFSA Positions",
+            "url": "v1/accounts/51580807/positions",
+            "method": "GET",
+            "sortNum": 32812.5,
+            "created": "2022-08-30T00:12:04.086Z",
+            "modified": "2023-03-04T14:47:19.276Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f6a04cfd-1079-46f0-8775-855e7e74c0a6",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "TFSA Orders",
+            "url": "v1/accounts/51580807/orders?startTime=2022-05-17T01:00:00-05:00&endTime=2022-05-17T22:59:59-05:00&stateFilter=All",
+            "method": "GET",
+            "sortNum": 35000,
+            "created": "2022-08-30T00:20:22.645Z",
+            "modified": "2023-03-04T15:03:41.990Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2022-05-17T01:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2022-05-17T22:59:59-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "stateFilter",
+                    "value": "All",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "da91ba3a-8fc3-42fb-be4d-942478968629",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "TFSA Executions",
+            "url": "v1/accounts/51580807/executions",
+            "method": "GET",
+            "sortNum": 36250,
+            "created": "2023-03-04T15:01:44.832Z",
+            "modified": "2023-03-04T15:02:21.104Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "0a230979-e69b-40f1-abc7-dace3fe6ad9c",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "TFSA Activities",
+            "url": "v1/accounts/51580807/activities?startTime=2021-01-01T01:00:00-05:00&endTime=2021-01-28T22:59:59-05:00",
+            "method": "GET",
+            "sortNum": 37500,
+            "created": "2022-08-30T00:20:24.841Z",
+            "modified": "2023-03-06T02:54:56.967Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2021-01-01T01:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2021-01-28T22:59:59-05:00",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e86d72ca-c4fd-460e-bd94-ede41e209d0a",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "AMD Candlestick",
+            "url": "v1/markets/candles/6770?startTime=2013-01-01T00:00:00-05:00&endTime=2023-10-20T23:59:59-05:00&interval=OneDay",
+            "method": "GET",
+            "sortNum": 43750,
+            "created": "2023-03-06T02:47:21.443Z",
+            "modified": "2023-03-06T02:51:58.521Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2013-01-01T00:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2023-10-20T23:59:59-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "interval",
+                    "value": "OneDay",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ce9792f4-3f40-4578-83a0-96b382746650",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "ATD.TO Candlestick",
+            "url": "v1/markets/candles/7119?startTime=2013-01-01T00:00:00-05:00&endTime=2023-10-20T23:59:59-05:00&interval=OneDay",
+            "method": "GET",
+            "sortNum": 46875,
+            "created": "2023-03-06T02:47:39.527Z",
+            "modified": "2023-03-06T02:48:09.822Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2013-01-01T00:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2023-10-20T23:59:59-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "interval",
+                    "value": "OneDay",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "0178abba-6a7c-4422-91ad-50e51e5e5753",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "INTC Candlestick",
+            "url": "v1/markets/candles/23205?startTime=2013-01-01T00:00:00-05:00&endTime=2023-10-20T23:59:59-05:00&interval=OneDay",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2022-08-30T00:13:22.881Z",
+            "modified": "2023-03-04T14:39:29.501Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2013-01-01T00:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2023-10-20T23:59:59-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "interval",
+                    "value": "OneDay",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "646ff954-05d6-409c-b607-fa00022e762b",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "NEGG Candlestick",
+            "url": "v1/markets/candles/36083445?startTime=2013-01-01T00:00:00-05:00&endTime=2023-10-20T23:59:59-05:00&interval=OneDay",
+            "method": "GET",
+            "sortNum": 55000,
+            "created": "2023-03-06T01:45:03.576Z",
+            "modified": "2023-03-06T01:46:12.625Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "startTime",
+                    "value": "2013-01-01T00:00:00-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "endTime",
+                    "value": "2023-10-20T23:59:59-05:00",
+                    "isPath": false
+                },
+                {
+                    "name": "interval",
+                    "value": "OneDay",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "f2bcb477-183d-438d-89b7-af6f2195d9ca",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "AMD Symbol",
+            "url": "v1/symbols/6770",
+            "method": "GET",
+            "sortNum": 56250,
+            "created": "2023-03-06T02:46:25.107Z",
+            "modified": "2023-03-06T02:47:06.424Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "dde14838-f3e2-4bf8-a2af-eb64a2a59e5b",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "ATD.TO Symbol",
+            "url": "v1/symbols/7119",
+            "method": "GET",
+            "sortNum": 58125,
+            "created": "2023-03-06T01:35:42.432Z",
+            "modified": "2023-03-06T02:47:13.078Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "198a884a-238a-492a-a9e4-6d6b0a760c11",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "INTC Symbol",
+            "url": "v1/symbols/23205",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-03-06T00:20:13.982Z",
+            "modified": "2023-03-06T00:20:45.960Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a6d5b896-87cd-4022-9245-8af793cc00bd",
+            "colId": "cfa50205-7fb7-499c-ac05-6e7acda030f7",
+            "containerId": "",
+            "name": "NEGG Symbol",
+            "url": "v1/symbols/36083445",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-03-06T01:05:43.402Z",
+            "modified": "2023-03-06T01:06:10.004Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            },
+            "tests": []
+        }
+    ],
+    "settings": {
+        "headers": [],
+        "tests": [],
+        "options": {
+            "baseUrl": "{{api-server}}"
+        },
+        "envId": "23044df1-021c-4a84-9008-d2970e7f8f34"
+    }
+}
