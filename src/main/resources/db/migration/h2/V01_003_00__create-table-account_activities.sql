@@ -6,6 +6,12 @@ create table if not exists dbo.account_activities (
     symbol_id       smallint not null,
     settlement_date date not null,
     acct_action     varchar(10) null,
+    currency        char(3) not null,
+    quantity        numeric(8,2),
+    price           numeric(11,5),
+    grossAmount     numeric(14,5),
+    commission      numeric(12,2),
+    net_amount      numeric(14,5),
     actvt_type      varchar(25) not null
 );
 
