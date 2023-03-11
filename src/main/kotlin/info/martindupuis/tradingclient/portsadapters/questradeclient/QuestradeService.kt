@@ -1,3 +1,5 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-interface QuestradeService
+interface QuestradeService {
+    fun isConnected(): Boolean
+}
