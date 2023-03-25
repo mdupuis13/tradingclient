@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.0.4"
+	id("org.springframework.boot") version "3.0.5"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("com.github.ben-manes.versions") version "0.46.0"
 	id("org.flywaydb.flyway") version "9.15.2"
@@ -33,15 +33,19 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	
 	implementation(project(":lib:j-questrade"))
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 
 	runtimeOnly("org.postgresql:postgresql")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
+	testImplementation(kotlin("test"))
+	testImplementation("org.amshove.kluent:kluent:1.72")
+	// To get JUnit errors from kotlin.test, to e.g. enable diff windows in failure messages
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.8.10")
 	testImplementation("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.4")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("io.projectreactor:reactor-test")
 
 	kapt("org.springframework.boot:spring-boot-configuration-processor")

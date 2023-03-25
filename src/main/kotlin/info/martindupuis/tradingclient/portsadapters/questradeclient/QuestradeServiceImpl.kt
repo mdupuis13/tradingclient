@@ -7,7 +7,7 @@ class QuestradeServiceImpl: QuestradeService {
         return isConnectedToAPI
     }
 
-    override fun connect(refreshToken: String) {
+    override fun connect() {
         isConnectedToAPI = true
     }
 }
