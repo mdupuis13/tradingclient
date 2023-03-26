@@ -2,8 +2,8 @@ package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 
-class QuestradeRepositoryImpl : QuestradeRepository {
+class RepositoryImpl : Repository {
     override fun getRefeshToken(): QuestradeRefreshToken {
-        return QuestradeRefreshToken("","", "")
+        return QuestradeRefreshToken("", "", "")
     }
 }

@@ -1,6 +1,8 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-class QuestradeServiceImpl: QuestradeService {
+import com.jquestrade.Questrade as LibQuestrade
+
+class ServiceImpl(val questradeLib: LibQuestrade) : Service {
     private var isConnectedToAPI = false
 
     override fun isConnected(): Boolean {
@@ -10,4 +12,6 @@ class QuestradeServiceImpl: QuestradeService {
     override fun connect() {
         isConnectedToAPI = true
     }
+
+    override fun getAccounts() = questradeLib.accounts.toList()
 }

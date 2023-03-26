@@ -4,11 +4,11 @@ import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.Qu
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class QuestradeRepositoryImplTest {
+class RepositoryImplTest {
 
     @Test
     fun givenValidRepo_whenIgetRefeshToken_thenTheGivenTokenIsValid() {
-        val sut: QuestradeRepository = QuestradeRepositoryImpl()
+        val sut: Repository = RepositoryImpl()
 
         assertThat(sut.getRefeshToken()).isInstanceOf(QuestradeRefreshToken::class.java)
     }

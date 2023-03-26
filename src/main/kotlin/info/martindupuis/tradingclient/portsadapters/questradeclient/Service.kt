@@ -1,6 +1,9 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-interface QuestradeService {
+import com.jquestrade.Account
+
+interface Service {
     fun isConnected(): Boolean
     fun connect()
+    fun getAccounts(): List<Account>
 }
