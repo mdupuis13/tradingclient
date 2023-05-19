@@ -45,7 +45,7 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.8.20")
 	testImplementation("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("io.mockk:mockk:1.13.4")
+	testImplementation("io.mockk:mockk:1.13.5")
 	testImplementation("io.projectreactor:reactor-test")
 
 	kapt("org.springframework.boot:spring-boot-configuration-processor")
