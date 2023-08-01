@@ -40,7 +40,7 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
 	testImplementation(kotlin("test"))
-	testImplementation("org.amshove.kluent:kluent:1.72")
+	testImplementation("org.amshove.kluent:kluent:1.73")
 	// To get JUnit errors from kotlin.test, to e.g. enable diff windows in failure messages
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.8.21")
 	testImplementation("com.h2database:h2")
