@@ -8,7 +8,7 @@ plugins {
 
 	kotlin("plugin.spring") version "1.8.20"
 	kotlin("jvm") version "1.8.21"
-	kotlin("plugin.jpa") version "1.8.10"
+	kotlin("plugin.jpa") version "1.8.22"
 	kotlin("kapt") version "1.8.21"
 }
 
@@ -33,14 +33,14 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	
 	implementation(project(":lib:j-questrade"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
 
 	runtimeOnly("org.postgresql:postgresql")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	
 	testImplementation(kotlin("test"))
-	testImplementation("org.amshove.kluent:kluent:1.72")
+	testImplementation("org.amshove.kluent:kluent:1.73")
 	// To get JUnit errors from kotlin.test, to e.g. enable diff windows in failure messages
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.8.21")
 	testImplementation("com.h2database:h2")
