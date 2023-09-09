@@ -91,7 +91,7 @@ jobs:
           --location \
           --output detekt-cli.zip
         
-        unzip detekt-cli.zip detekt-cli-1.23.1/bin/detekt-cli
+        unzip -j detekt-cli.zip detekt-cli-*/bin/detekt-cli
         chmod a+x detekt-cli
         echo $dest >> $GITHUB_PATH
 
