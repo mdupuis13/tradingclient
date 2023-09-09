@@ -32,7 +32,7 @@ on:
 env:
   # Release tag associated with version of Detekt to be installed
   # SARIF support (required for this workflow) was introduced in Detekt v1.15.0
-  DETEKT_RELEASE_TAG: 1.23.1
+  DETEKT_RELEASE_TAG: v1.23.1
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -56,7 +56,7 @@ jobs:
         gh api graphql --field tagName=$DETEKT_RELEASE_TAG --raw-field query='
           query getReleaseAssetDownloadUrl($tagName: String!) {
             repository(name: "detekt", owner: "detekt") {
-              release(tagName: "v"+$tagName) {
+              release(tagName: $tagName) {
                 releaseAssets(first: 8) {
                   nodes {
                     downloadUrl
