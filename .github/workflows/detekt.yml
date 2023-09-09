@@ -57,7 +57,7 @@ jobs:
           query getReleaseAssetDownloadUrl($tagName: String!) {
             repository(name: "detekt", owner: "detekt") {
               release(tagName: $tagName) {
-                releaseAssets(first: 8) {
+                releaseAssets(first: 1) {
                   nodes {
                     downloadUrl
                     contentType
@@ -77,7 +77,7 @@ jobs:
           exit 1
         fi
 
-        DETEKT_DOWNLOAD_URL=$(jq --raw-output '.data.repository.release.releaseAssets.nodes[] | select(.contentType=="application/zip").downloadUrl' gh_response.json)
+        DETEKT_DOWNLOAD_URL=$(jq --raw-output '.data.repository.release.releaseAssets.nodes[0].downloadUrl' gh_response.json)
         echo "download_url=$DETEKT_DOWNLOAD_URL" >> $GITHUB_OUTPUT
 
     # Sets up the detekt cli
@@ -89,10 +89,9 @@ jobs:
           --url ${{ steps.detekt_info.outputs.download_url }} \
           --silent \
           --location \
-          --output detekt-cli.zip
+          --output detekt
         
-        unzip -j detekt-cli.zip detekt-cli-*/bin/detekt-cli
-        chmod a+x detekt-cli
+        chmod a+x detekt
         echo $dest >> $GITHUB_PATH
 
     # Performs static analysis using Detekt
