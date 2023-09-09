@@ -8,7 +8,7 @@ plugins {
 
 	kotlin("plugin.spring") version "1.8.22"
 	kotlin("jvm") version "1.9.10"
-	kotlin("plugin.jpa") version "1.8.22"
+	kotlin("plugin.jpa") version "1.9.10"
 	kotlin("kapt") version "1.8.21"
 }
 
@@ -33,7 +33,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	
 	implementation(project(":lib:j-questrade"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 
 	runtimeOnly("org.postgresql:postgresql")
 
