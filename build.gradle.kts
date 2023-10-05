@@ -9,7 +9,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.10"
 	kotlin("jvm") version "1.9.10"
 	kotlin("plugin.jpa") version "1.9.10"
-	kotlin("kapt") version "1.8.21"
+	kotlin("kapt") version "1.9.10"
 }
 
 group = "info.martindupuis"
