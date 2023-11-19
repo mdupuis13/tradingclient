@@ -6,7 +6,7 @@ plugins {
 	id("com.github.ben-manes.versions") version "0.49.0"
 	id("org.flywaydb.flyway") version "9.22.1"
 
-	kotlin("plugin.spring") version "1.9.10"
+	kotlin("plugin.spring") version "1.9.20"
 	kotlin("jvm") version "1.9.20"
 	kotlin("plugin.jpa") version "1.9.20"
 	kotlin("kapt") version "1.9.10"
