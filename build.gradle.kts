@@ -33,7 +33,7 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	
 	implementation(project(":lib:j-questrade"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 
 	runtimeOnly("org.postgresql:postgresql")
 
