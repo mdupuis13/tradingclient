@@ -1,8 +1,10 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
+import com.jquestrade.client.Authorization
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import org.assertj.core.api.Assertions.assertThat
@@ -71,8 +73,8 @@ internal class ServiceTests {
             return Array(1) { anAccount }
         }
 
-        fun createAuthorizationToken(): com.jquestrade.Authorization {
-            return com.jquestrade.Authorization("eidohch4Oom2ieNgetooLeiF4ix1iequo", "baeNoo1cie0Daiyo6at7seisah3Ohweef", "https://api07.iq.questrade.com/")
+        fun createAuthorizationToken(): Authorization {
+            return Authorization("eidohch4Oom2ieNgetooLeiF4ix1iequo", "https://api07.iq.questrade.com/", 1800, "baeNoo1cie0Daiyo6at7seisah3Ohweef", "Bearer")
         }
     }
 }
