@@ -1,6 +1,7 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
+import com.jquestrade.Account
 import com.jquestrade.AuthenticationToken
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import io.mockk.MockKAnnotations
@@ -8,6 +9,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import org.assertj.core.api.Assertions.assertThat
+import org.instancio.Instancio
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -45,7 +47,7 @@ internal class ServiceTests {
 
         @Test
         fun whenConnectIsCalled_thenTheServiceConnectsToQuestradeAPI() {
-            every { questradeRepo.getRefeshToken() } returns QuestradeRefreshToken("", "", REFRESH_TOKEN)
+            every { questradeRepo.getRefeshToken() } returns Instancio.create(QuestradeRefreshToken::class.java)
 
             sut.connect()
             assertThat(sut.isConnected()).isTrue
