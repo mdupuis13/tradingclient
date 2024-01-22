@@ -1,7 +1,7 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
-import com.jquestrade.Account
+import info.martindupuis.Account
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import com.jquestrade.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.client.QuestradeWebClient as LibQuestrade
 
 @ExtendWith(MockKExtension::class)
 internal class ServiceTests {

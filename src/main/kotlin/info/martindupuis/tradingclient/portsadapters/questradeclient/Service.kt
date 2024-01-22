@@ -1,6 +1,6 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-import com.jquestrade.Account
+import info.martindupuis.Account
 
 interface Service {
     fun isConnected(): Boolean

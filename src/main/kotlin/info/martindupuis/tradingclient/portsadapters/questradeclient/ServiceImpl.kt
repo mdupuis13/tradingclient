@@ -1,6 +1,6 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-import com.jquestrade.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.client.QuestradeWebClient as LibQuestrade
 
 class ServiceImpl(val questradeLib: LibQuestrade) : Service {
     private var isConnectedToAPI = false
