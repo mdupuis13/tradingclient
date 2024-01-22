@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.ZonedDateTime
-import com.jquestrade.Questrade as LibQuestrade
+import com.jquestrade.client.QuestradeWebClient as LibQuestrade
 
 private const val REFRESH_TOKEN = "abc123"
 
@@ -54,7 +54,7 @@ internal class ServiceTests {
 
     @Test
     fun whenFetchAccountsIsCalled_thenAllAccountsAreReturned() {
-        every { libQuestrade.accounts } returns JQuestradeTestData().createBasicAccountsArray()
+        every { libQuestrade.getAccounts(null) } returns listOf(Instancio.create(Account::class.java))
 
         val myAccounts = sut.getAccounts()
 
@@ -69,10 +69,10 @@ internal class ServiceTests {
      *  We have to create objects using a json to object mapper (jackson-module-kotlin in this case)
      */
     inner class JQuestradeTestData {
-        fun createBasicAccountsArray(): Array<com.jquestrade.Account> {
-            val anAccount = com.jquestrade.Account("Cash", "1", "Active", true, true, "Individual")
+        fun createBasicAccountsArray(): List<Account> {
+            val anAccount = Account("Cash", "1", "Active", true, true, "Individual")
 
-            return Array(1) { anAccount }
+            return listOf(anAccount)
         }
 
         fun createAuthorizationToken(): AuthenticationToken{
