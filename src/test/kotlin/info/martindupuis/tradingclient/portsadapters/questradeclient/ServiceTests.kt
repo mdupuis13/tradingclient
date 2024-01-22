@@ -1,7 +1,7 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
-import com.jquestrade.client.Authorization
+import com.jquestrade.AuthenticationToken
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import java.time.ZonedDateTime
 import com.jquestrade.Questrade as LibQuestrade
 
 private const val REFRESH_TOKEN = "abc123"
@@ -61,10 +62,11 @@ internal class ServiceTests {
     }
 
 
-    /* This class is created because the j-questrade library has not been
-       created with testing in mind :/
-
-       We have to create objects using a json to object mapper (jackson-module-kotlin in this case)
+    /**
+     *  This class is created because the j-questrade library has not been
+     *  created with testing in mind :/
+     *
+     *  We have to create objects using a json to object mapper (jackson-module-kotlin in this case)
      */
     inner class JQuestradeTestData {
         fun createBasicAccountsArray(): Array<com.jquestrade.Account> {
@@ -73,8 +75,9 @@ internal class ServiceTests {
             return Array(1) { anAccount }
         }
 
-        fun createAuthorizationToken(): Authorization {
-            return Authorization("eidohch4Oom2ieNgetooLeiF4ix1iequo", "https://api07.iq.questrade.com/", 1800, "baeNoo1cie0Daiyo6at7seisah3Ohweef", "Bearer")
+        fun createAuthorizationToken(): AuthenticationToken{
+            return AuthenticationToken("eidohch4Oom2ieNgetooLeiF4ix1iequo", "https://api07.iq.questrade.com/",
+                ZonedDateTime.now() , "baeNoo1cie0Daiyo6at7seisah3Ohweef", "Bearer")
         }
     }
 }
