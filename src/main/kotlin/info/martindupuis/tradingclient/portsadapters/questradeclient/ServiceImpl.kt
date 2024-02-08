@@ -1,17 +1,25 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
+import info.martindupuis.AuthenticationToken
+import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import info.martindupuis.client.QuestradeWebClient as LibQuestrade
 
-class ServiceImpl(val questradeLib: LibQuestrade) : Service {
+class ServiceImpl(private val questradeLib: LibQuestrade) : Service {
+
+    private lateinit var authenticationToken: AuthenticationToken
+
     private var isConnectedToAPI = false
 
     override fun isConnected(): Boolean {
         return isConnectedToAPI
     }
 
-    override fun connect() {
-        isConnectedToAPI = true
+    override fun connect(token: QuestradeRefreshToken) {
+        authenticationToken = questradeLib.authenticate(token.refresh_token)
+
+        if (authenticationToken.isValid)
+            isConnectedToAPI = true
     }
 
-    override fun getAccounts() = questradeLib.getAccounts(null).toList()
+    override fun getAccounts() = questradeLib.getAccounts(authenticationToken).toList()
 }
