@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import info.martindupuis.client.QuestradeWebClient as LibQuestrade
 
 @ExtendWith(MockKExtension::class)
-internal class ServiceTests {
+internal class ServiceImplTests {
 
     @MockK
     lateinit var libQuestrade: LibQuestrade
