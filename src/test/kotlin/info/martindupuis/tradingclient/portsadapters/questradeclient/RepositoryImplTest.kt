@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class RepositoryImplTest {
 
     @Test
-    fun givenValidRepo_whenIgetRefeshToken_thenTheGivenTokenIsValid() {
+    fun givenValidRepo_whenGetRefreshTokenIsCalled_thenTheGivenTokenIsValid() {
         val sut: Repository = RepositoryImpl()
 
         assertThat(sut.getRefeshToken()).isInstanceOf(QuestradeRefreshToken::class.java)
