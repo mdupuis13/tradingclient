@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import info.martindupuis.client.QuestradeWebClient as LibQuestrade
 
 @ExtendWith(MockKExtension::class)
-internal class ServiceTests {
+internal class ServiceImplTests {
 
     @MockK
     lateinit var libQuestrade: LibQuestrade
@@ -48,7 +48,6 @@ internal class ServiceTests {
         fun givenEverythingIsFine_whenConnectIsCalled_thenTheServiceConnectsToQuestradeAPI() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
                 .set(field(AuthenticationToken::access_token), "Valid test token")
-                .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().future() }
                 .create()
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
 
