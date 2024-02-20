@@ -1,10 +1,10 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
-import info.martindupuis.Account
-import info.martindupuis.AuthenticationToken
-import info.martindupuis.exceptions.AuthenticationException
-import info.martindupuis.exceptions.AuthenticationExpiredException
+import info.martindupuis.jquestrade.Account
+import info.martindupuis.jquestrade.AuthenticationToken
+import info.martindupuis.jquestrade.exceptions.AuthenticationException
+import info.martindupuis.jquestrade.exceptions.AuthenticationExpiredException
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -19,25 +19,25 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import info.martindupuis.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
 
 @ExtendWith(MockKExtension::class)
-internal class ServiceImplTests {
+internal class TradingServiceImplTests {
 
     @MockK
     lateinit var libQuestrade: LibQuestrade
 
-    private lateinit var sut: Service
+    private lateinit var sut: TradingService
 
     @BeforeEach
     fun init_test() {
         MockKAnnotations.init(this)
 
-        sut = ServiceImpl(libQuestrade)
+        sut = TradingServiceImpl(libQuestrade)
     }
 
     @Nested
-    inner class AuthenticationToExternalServiceTests {
+    inner class AuthenticationToExternalTradingServiceTests {
         @Test
         fun whenANewInstanceIsCreated_thenItIsDisconnected() {
             assertThat(sut).isNotNull

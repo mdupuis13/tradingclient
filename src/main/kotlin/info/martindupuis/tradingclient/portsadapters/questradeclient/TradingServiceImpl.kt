@@ -1,10 +1,13 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
-import info.martindupuis.AuthenticationToken
+import info.martindupuis.jquestrade.Account
+import info.martindupuis.jquestrade.AuthenticationToken
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
-import info.martindupuis.client.QuestradeWebClient as LibQuestrade
+import org.springframework.stereotype.Service
+import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
 
-class ServiceImpl(private val questradeLib: LibQuestrade) : Service {
+@Service
+class TradingServiceImpl(private val tradingPlatform: LibQuestrade) : TradingService {
 
     private lateinit var authenticationToken: AuthenticationToken
 
@@ -15,11 +18,11 @@ class ServiceImpl(private val questradeLib: LibQuestrade) : Service {
     }
 
     override fun connect(token: QuestradeRefreshToken) {
-        authenticationToken = questradeLib.authenticate(token.refresh_token)
+        authenticationToken = tradingPlatform.authenticate(token.refresh_token)
 
         if (authenticationToken.isValid)
             isConnectedToAPI = true
     }
 
-    override fun getAccounts() = questradeLib.getAccounts(authenticationToken).toList()
+    override fun getAccounts(): List<Account> = tradingPlatform.getAccounts(authenticationToken)
 }
