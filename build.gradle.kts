@@ -30,6 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("com.h2database:h2")
 
     implementation(project(":lib:j-questrade"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
@@ -37,6 +38,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("org.projectlombok:lombok:1.18.28")
 
     testImplementation(kotlin("test"))
     testImplementation("org.amshove.kluent:kluent:1.73")

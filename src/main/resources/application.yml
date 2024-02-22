@@ -3,13 +3,21 @@ spring:
     url: jdbc:h2:mem:tradetest;DB_CLOSE_ON_EXIT=TRUE;MODE=PostgreSQL
   jpa:
     properties:
-      hibernate: 
+      hibernate:
         # Recent versions of H2 require special configuration to properly escape reserved keywords like user.
         # source: https://spring.io/guides/tutorials/spring-boot-kotlin/
         globally_quoted_identifiers=true
         globally_quoted_identifiers_skip_column_definitions=true
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  #  flyway:
+  #    schemas:
+  #    - flyway_history_schema
   flyway:
-    schemas:
-    - flyway_history_schema
+    locations:
+      - db/migration/h2
+
+info:
+  martindupuis:
+    jquestrade:
+      loginUrl: https://login.questrade.com/
