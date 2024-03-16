@@ -53,6 +53,7 @@ class TradingServiceImplTests {
         fun givenEverythingIsFine_whenConnectIsCalled_thenTheServiceConnectsToQuestradeAPI() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
                 .set(field(AuthenticationToken::access_token), "Valid test token")
+                .generate(field(AuthenticationToken::expires_at)) { gen -> gen.temporal().zonedDateTime().future() }
                 .create()
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
 
