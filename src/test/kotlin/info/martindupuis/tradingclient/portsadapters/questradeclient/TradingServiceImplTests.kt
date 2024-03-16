@@ -6,6 +6,7 @@ import info.martindupuis.jquestrade.AuthenticationToken
 import info.martindupuis.jquestrade.exceptions.AuthenticationException
 import info.martindupuis.jquestrade.exceptions.AuthenticationExpiredException
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
+import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountMapper
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -20,12 +21,16 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.tradingclient.model.Account as apiAccount
 
 @ExtendWith(MockKExtension::class)
-internal class TradingServiceImplTests {
+class TradingServiceImplTests {
 
     @MockK
     lateinit var libQuestrade: LibQuestrade
+
+    @MockK
+    lateinit var acctMapper: AccountMapper
 
     private lateinit var sut: TradingService
 
@@ -33,7 +38,7 @@ internal class TradingServiceImplTests {
     fun init_test() {
         MockKAnnotations.init(this)
 
-        sut = TradingServiceImpl(libQuestrade)
+        sut = TradingServiceImpl(libQuestrade, acctMapper)
     }
 
     @Nested
@@ -51,7 +56,7 @@ internal class TradingServiceImplTests {
                 .create()
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
 
-            every { libQuestrade.authenticate(refreshToken.refresh_token) } returns authToken
+            every { libQuestrade.authenticate(any()) } returns authToken
 
             sut.connect(refreshToken)
             assertThat(sut.isConnected()).isTrue
@@ -90,7 +95,8 @@ internal class TradingServiceImplTests {
         val authToken = Instancio.create(AuthenticationToken::class.java)
 
         every { libQuestrade.authenticate(refeshToken.refresh_token) } returns authToken
-        every { libQuestrade.getAccounts(authToken) } returns Instancio.createList(Account::class.java)
+        every { libQuestrade.getAccounts(authToken) } returns Instancio.createSet(Account::class.java)
+        every { acctMapper.map(any()) } returns Instancio.createList(apiAccount::class.java)
 
         sut.connect(refeshToken)
         val myAccounts = sut.getAccounts()

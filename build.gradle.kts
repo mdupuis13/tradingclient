@@ -40,6 +40,9 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.projectlombok:lombok:1.18.28")
 
+    implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
+
     testImplementation(kotlin("test"))
     testImplementation("org.amshove.kluent:kluent:1.73")
     // To get JUnit errors from kotlin.test, to e.g. enable diff windows in failure messages
@@ -47,6 +50,7 @@ dependencies {
     testImplementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.instancio:instancio-junit:3.6.0")
     testImplementation("org.junit-pioneer:junit-pioneer:2.2.0")
