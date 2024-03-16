@@ -1,8 +1,8 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:6432/tradingclient
-    username: postgres
-    password: ${TRADINGCLIENT_DB_PWD}
+#  datasource:
+#    url: jdbc:postgresql://localhost:6432/tradingclient
+#    username: postgres
+#    password: ${TRADINGCLIENT_DB_PWD}
   flyway:
     locations:
     - db/migration/postgresql
