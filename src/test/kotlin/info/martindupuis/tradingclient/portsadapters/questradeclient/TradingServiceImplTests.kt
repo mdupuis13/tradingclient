@@ -1,11 +1,12 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
-import info.martindupuis.Account
-import info.martindupuis.AuthenticationToken
-import info.martindupuis.exceptions.AuthenticationException
-import info.martindupuis.exceptions.AuthenticationExpiredException
+import info.martindupuis.jquestrade.Account
+import info.martindupuis.jquestrade.AuthenticationToken
+import info.martindupuis.jquestrade.exceptions.AuthenticationException
+import info.martindupuis.jquestrade.exceptions.AuthenticationExpiredException
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
+import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountMapper
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -19,25 +20,29 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import info.martindupuis.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
+import info.martindupuis.tradingclient.model.Account as apiAccount
 
 @ExtendWith(MockKExtension::class)
-internal class ServiceImplTests {
+class TradingServiceImplTests {
 
     @MockK
     lateinit var libQuestrade: LibQuestrade
 
-    private lateinit var sut: Service
+    @MockK
+    lateinit var acctMapper: AccountMapper
+
+    private lateinit var sut: TradingService
 
     @BeforeEach
     fun init_test() {
         MockKAnnotations.init(this)
 
-        sut = ServiceImpl(libQuestrade)
+        sut = TradingServiceImpl(libQuestrade, acctMapper)
     }
 
     @Nested
-    inner class AuthenticationToExternalServiceTests {
+    inner class AuthenticationToExternalTradingServiceTests {
         @Test
         fun whenANewInstanceIsCreated_thenItIsDisconnected() {
             assertThat(sut).isNotNull
@@ -48,10 +53,11 @@ internal class ServiceImplTests {
         fun givenEverythingIsFine_whenConnectIsCalled_thenTheServiceConnectsToQuestradeAPI() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
                 .set(field(AuthenticationToken::access_token), "Valid test token")
+                .generate(field(AuthenticationToken::expires_at)) { gen -> gen.temporal().zonedDateTime().future() }
                 .create()
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
 
-            every { libQuestrade.authenticate(refreshToken.refresh_token) } returns authToken
+            every { libQuestrade.authenticate(any()) } returns authToken
 
             sut.connect(refreshToken)
             assertThat(sut.isConnected()).isTrue
@@ -90,7 +96,8 @@ internal class ServiceImplTests {
         val authToken = Instancio.create(AuthenticationToken::class.java)
 
         every { libQuestrade.authenticate(refeshToken.refresh_token) } returns authToken
-        every { libQuestrade.getAccounts(authToken) } returns Instancio.createList(Account::class.java)
+        every { libQuestrade.getAccounts(authToken) } returns Instancio.createSet(Account::class.java)
+        every { acctMapper.map(any()) } returns Instancio.createList(apiAccount::class.java)
 
         sut.connect(refeshToken)
         val myAccounts = sut.getAccounts()
