@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.get
 
 @WebMvcTest
 class AccountsControllerTest(@Autowired val mockMvc: MockMvc) {
@@ -22,14 +20,14 @@ class AccountsControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun getAccounts() {
+        val accounts = Instancio.createList(Account::class.java)
         every { service.isConnected() } returns true
-        every { service.getAccounts() } returns Instancio.createList(Account::class.java)
+        every { service.getAccounts() } returns accounts
 
-        mockMvc.perform(get("/tradingclient/api/accounts"))
-            .andExpect(status().isOk)
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//            .andExpect { e -> e.response. }
-//            .andExpect(jsonPath("[0]").isArray)
+        mockMvc.get("/tradingclient/api/accounts").andExpectAll {
+            status { isOk() }
+            content { contentType(MediaType.APPLICATION_JSON) }
+            jsonPath("$.length()") { value(accounts.size) }
+        }
     }
-
 }
