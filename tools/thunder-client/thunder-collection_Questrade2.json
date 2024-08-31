@@ -1,0 +1,91 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "questrade",
+    "collectionId": "67afdfda-8f13-4a9d-8076-c98a98a27852",
+    "dateExported": "2024-08-31T02:35:43.433Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "461b25bb-f860-4b03-893f-ed10657cf57f",
+            "colId": "67afdfda-8f13-4a9d-8076-c98a98a27852",
+            "containerId": "",
+            "name": "get auth token",
+            "url": "https://login.questrade.com/oauth2/token?grant_type=refresh_token&refresh_token=2MX086K1_wPLOvirvh7qBbM7uPxG1Naj0",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-08-31T02:09:55.297Z",
+            "modified": "2024-08-31T02:28:44.516Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "grant_type",
+                    "value": "refresh_token",
+                    "isPath": false
+                },
+                {
+                    "name": "refresh_token",
+                    "value": "2MX086K1_wPLOvirvh7qBbM7uPxG1Naj0",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "asdas"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.api_server",
+                    "action": "setto",
+                    "value": "{{api-server}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json.access_token",
+                    "action": "setto",
+                    "value": "{{access-token}}"
+                }
+            ]
+        },
+        {
+            "_id": "727ee681-3870-4cb4-afe0-250b7d02427e",
+            "colId": "67afdfda-8f13-4a9d-8076-c98a98a27852",
+            "containerId": "",
+            "name": "Get Accounts",
+            "url": "v1/accounts",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-08-31T02:23:56.787Z",
+            "modified": "2024-08-31T02:25:49.539Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            }
+        },
+        {
+            "_id": "67c4fd43-dcdd-447d-b010-167bbdf6adbe",
+            "colId": "67afdfda-8f13-4a9d-8076-c98a98a27852",
+            "containerId": "",
+            "name": "Get balances",
+            "url": "v1/accounts/51580807/balances",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-08-31T02:29:28.853Z",
+            "modified": "2024-08-31T02:31:05.817Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access-token}}"
+            }
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "{{api-server}}"
+        },
+        "envId": "4c353b22-a3d1-42ab-a660-7d109abf48b0"
+    },
+    "ref": "0T2IORt9gNrcLXxW5QPVViKe9-n9tgiLo7GaSfTCuwhTp7CAKZctC-4IblKYeh_yIHCvEpahMIVOPUK5VE8tZw"
+}

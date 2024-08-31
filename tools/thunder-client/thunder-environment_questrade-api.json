@@ -1,16 +1,18 @@
 {
-    "client": "Thunder Client",
-    "environmentName": "questrade-api",
-    "dateExported": "2023-03-06T02:56:16.398Z",
-    "version": "1.0",
+    "clientName": "Thunder Client",
+    "environmentName": "questrade",
+    "environmentId": "4c353b22-a3d1-42ab-a660-7d109abf48b0",
+    "dateExported": "2024-08-31T02:40:10.803Z",
+    "version": "1.2",
     "variables": [
         {
             "name": "api-server",
-            "value": "https://api02.iq.questrade.com/"
+            "value": "https://api03.iq.questrade.com/"
         },
         {
             "name": "access-token",
             "value": ""
         }
-    ]
+    ],
+    "ref": "nytQ0S_D_hATX7QdUWoi7ZEWJSPatyVgcSYt5YEtmJTmT2pxYdCJobWS09VaWUiX"
 }
