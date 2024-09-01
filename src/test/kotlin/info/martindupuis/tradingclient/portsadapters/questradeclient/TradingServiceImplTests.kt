@@ -48,10 +48,11 @@ internal class TradingServiceImplTests {
         fun givenEverythingIsFine_whenConnectIsCalled_thenTheServiceConnectsToQuestradeAPI() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
                 .set(field(AuthenticationToken::access_token), "Valid test token")
+                .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().future() }
                 .create()
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
 
-            every { libQuestrade.authenticate(refreshToken.refresh_token) } returns authToken
+            every { libQuestrade.authenticate(any()) } returns authToken
 
             sut.connect(refreshToken)
             assertThat(sut.isConnected()).isTrue
@@ -60,7 +61,7 @@ internal class TradingServiceImplTests {
         @Test
         fun givenAccessTokenIsNotValid_whenConnectIsCalled_thenTheServiceIsNotConnected() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
-                .set(field(AuthenticationToken::access_token), null)
+                .set(field(AuthenticationToken::access_token), "")
                 .create()
 
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
@@ -87,10 +88,12 @@ internal class TradingServiceImplTests {
     @Test
     fun givenValidTokens_whenFetchAccountsIsCalled_thenAllAccountsAreReturned() {
         val refeshToken = Instancio.create(QuestradeRefreshToken::class.java)
-        val authToken = Instancio.create(AuthenticationToken::class.java)
+        val authToken = Instancio.of(AuthenticationToken::class.java)
+            .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().future() }
+            .create()
 
-        every { libQuestrade.authenticate(refeshToken.refresh_token) } returns authToken
-        every { libQuestrade.getAccounts(authToken) } returns Instancio.createList(Account::class.java)
+        every { libQuestrade.authenticate(any()) } returns authToken
+        every { libQuestrade.getAccounts(any()) } returns Instancio.createSet(Account::class.java)
 
         sut.connect(refeshToken)
         val myAccounts = sut.getAccounts()
@@ -102,15 +105,15 @@ internal class TradingServiceImplTests {
     fun givenExpiredAuthToken_whenAccountIsCalled_thenAuthenticationExpiredExceptionIsThrown() {
         val authErrMsg = "Auth expired test"
 
-        val refeshToken = Instancio.create(QuestradeRefreshToken::class.java)
+        val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
         val expiredAuthToken = Instancio.of(AuthenticationToken::class.java)
             .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().past() }
             .create()
 
-        every { libQuestrade.authenticate(refeshToken.refresh_token) } returns expiredAuthToken
-        every { libQuestrade.getAccounts(expiredAuthToken) } throws AuthenticationExpiredException(authErrMsg)
+        every { libQuestrade.authenticate(any()) } returns expiredAuthToken
+        every { libQuestrade.getAccounts(any()) } throws AuthenticationExpiredException(authErrMsg)
 
-        sut.connect(refeshToken)
+        sut.connect(refreshToken)
 
         assertThatExceptionOfType(AuthenticationExpiredException::class.java)
             .isThrownBy { sut.getAccounts() }

@@ -12,21 +12,36 @@ class TradingServiceImpl(private val tradingPlatform: LibQuestrade) : TradingSer
 
     private val log = LoggerFactory.getLogger(javaClass)
 
-    private lateinit var authenticationToken: AuthenticationToken
+    private lateinit var platformToken: QuestradeRefreshToken
 
-    private var isConnectedToAPI = false
+    override fun isConnected(): Boolean = ::platformToken.isInitialized && tradingPlatformTokenFrom(platformToken).isValid
 
-    override fun isConnected(): Boolean {
-        return isConnectedToAPI
-    }
 
     override fun connect(token: QuestradeRefreshToken) {
-        authenticationToken = tradingPlatform.authenticate(token.refresh_token)
-        log.info(authenticationToken.toString())
+        val tradingPlatformToken = tradingPlatform.authenticate(token.refreshToken)
+        log.info(tradingPlatformToken.toString())
 
-        if (authenticationToken.isValid)
-            isConnectedToAPI = true
+        platformToken = questradeRefreshTokenFrom(tradingPlatformToken)
     }
 
-    override fun getAccounts(): List<Account> = tradingPlatform.getAccounts(authenticationToken)
+    override fun getAccounts(): List<Account> = tradingPlatform.getAccounts(tradingPlatformTokenFrom(platformToken)).toList()
+
+
+    fun tradingPlatformTokenFrom(refreshToken: QuestradeRefreshToken): AuthenticationToken =
+        AuthenticationToken(
+            refreshToken.accessToken,
+            refreshToken.apiServer,
+            refreshToken.expiresAt,
+            refreshToken.refreshToken,
+            null
+        )
+
+
+    fun questradeRefreshTokenFrom(tradingPlatformToken: AuthenticationToken): QuestradeRefreshToken =
+        QuestradeRefreshToken(
+            tradingPlatformToken.access_token,
+            tradingPlatformToken.api_server,
+            tradingPlatformToken.expires_at,
+            tradingPlatformToken.refresh_token
+        )
 }

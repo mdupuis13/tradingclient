@@ -1,7 +1,11 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient.entities
 
+import java.time.ZonedDateTime
+
 class QuestradeRefreshToken(
-        val access_token: String,
-        val api_server: String,
-        val refresh_token: String) {}
+    val accessToken: String,
+    val apiServer: String,
+    val expiresAt: ZonedDateTime,
+    val refreshToken: String
+) {}
 
