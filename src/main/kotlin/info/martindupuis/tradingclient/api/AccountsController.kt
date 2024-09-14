@@ -12,12 +12,12 @@ class AccountsController(val service: TradingService) {
 
     @GetMapping("/tradingclient/api/accounts")
     fun getAccounts(@RequestParam("refresh_token") refreshToken: String): ResponseEntity<List<Account>> {
-        val token = QuestradeRefreshToken("", "", ZonedDateTime.now().plusHours(2), refreshToken)
+        val token = QuestradeRefreshToken("", "", ZonedDateTime.now(), refreshToken)
 
         if (!service.isConnected())
             service.connect(token)
 
-        val accounts = service.getAccounts()
+        val accounts = service.getAccounts
 
         return ResponseEntity.ok(accounts)
     }
