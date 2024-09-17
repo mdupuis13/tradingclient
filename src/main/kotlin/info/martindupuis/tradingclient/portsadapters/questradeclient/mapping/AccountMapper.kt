@@ -7,5 +7,5 @@ import info.martindupuis.jquestrade.Account as jqAccount
 @Mapper(componentModel = "spring")
 interface AccountMapper {
     fun map(source: jqAccount): Account
-    fun map(source: List<jqAccount>): List<Account>
+    fun map(source: Set<jqAccount>): Set<Account>
 }

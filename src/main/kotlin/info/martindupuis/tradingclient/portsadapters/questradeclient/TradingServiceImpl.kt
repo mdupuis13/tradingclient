@@ -32,8 +32,8 @@ class TradingServiceImpl(
             isConnectedToAPI = true
     }
 
-    override fun getAccounts(): List<Account> {
-        val qAccounts = tradingPlatform.getAccounts(authenticationToken).toList()
+    override fun getAccounts(): Set<Account> {
+        val qAccounts = tradingPlatform.getAccounts(authenticationToken)
 
         return mapper.map(qAccounts)
     }

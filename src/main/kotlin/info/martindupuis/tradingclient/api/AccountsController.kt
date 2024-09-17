@@ -13,7 +13,7 @@ import java.time.ZonedDateTime
 class AccountsController(val service: TradingService) {
 
     @GetMapping("/tradingclient/api/accounts")
-    fun getAccounts(@RequestParam("refresh_token") refreshToken: String): ResponseEntity<List<Account>> {
+    fun getAccounts(@RequestParam("refresh_token") refreshToken: String): ResponseEntity<Set<Account>> {
         val token = QuestradeRefreshToken("", "", ZonedDateTime.now(), refreshToken)
 
         if (!service.isConnected())
