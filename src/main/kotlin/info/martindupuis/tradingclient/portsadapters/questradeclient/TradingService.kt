@@ -6,5 +6,5 @@ import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.Qu
 interface TradingService {
     fun isConnected(): Boolean
     fun connect(token: QuestradeRefreshToken)
-    fun getAccounts(): List<Account>
+    fun getAccounts(): Set<Account>
 }

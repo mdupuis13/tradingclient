@@ -25,15 +25,15 @@ class TradingServiceImpl(
     }
 
     override fun connect(token: QuestradeRefreshToken) {
-        authenticationToken = tradingPlatform.authenticate(token.refresh_token)
+        authenticationToken = tradingPlatform.authenticate(token.refreshToken)
         log.info(authenticationToken.toString())
 
         if (authenticationToken.isValid)
             isConnectedToAPI = true
     }
 
-    override fun getAccounts(): List<Account> {
-        val qAccounts = tradingPlatform.getAccounts(authenticationToken).toList()
+    override fun getAccounts(): Set<Account> {
+        val qAccounts = tradingPlatform.getAccounts(authenticationToken)
 
         return mapper.map(qAccounts)
     }

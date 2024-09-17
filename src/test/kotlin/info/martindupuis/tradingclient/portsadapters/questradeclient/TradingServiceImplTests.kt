@@ -5,6 +5,9 @@ import info.martindupuis.jquestrade.Account
 import info.martindupuis.jquestrade.AuthenticationToken
 import info.martindupuis.jquestrade.exceptions.AuthenticationException
 import info.martindupuis.jquestrade.exceptions.AuthenticationExpiredException
+import info.martindupuis.tradingclient.model.AccountStatus
+import info.martindupuis.tradingclient.model.AccountType
+import info.martindupuis.tradingclient.model.ClientAccountType
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountMapper
 import io.mockk.MockKAnnotations
@@ -13,6 +16,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.instancio.Gen.oneOf
 import org.instancio.Instancio
 import org.instancio.Select.field
 import org.instancio.generators.Generators
@@ -20,8 +24,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mapstruct.factory.Mappers
 import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
-import info.martindupuis.tradingclient.model.Account as apiAccount
 
 @ExtendWith(MockKExtension::class)
 class TradingServiceImplTests {
@@ -37,6 +41,9 @@ class TradingServiceImplTests {
     @BeforeEach
     fun init_test() {
         MockKAnnotations.init(this)
+
+        // real implementation of the mapper so that we can test it
+        acctMapper = Mappers.getMapper(AccountMapper::class.java)
 
         sut = TradingServiceImpl(libQuestrade, acctMapper)
     }
@@ -66,7 +73,7 @@ class TradingServiceImplTests {
         @Test
         fun givenAccessTokenIsNotValid_whenConnectIsCalled_thenTheServiceIsNotConnected() {
             val authToken = Instancio.of(AuthenticationToken::class.java)
-                .set(field(AuthenticationToken::access_token), null)
+                .set(field(AuthenticationToken::access_token), "")
                 .create()
 
             val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
@@ -93,11 +100,16 @@ class TradingServiceImplTests {
     @Test
     fun givenValidTokens_whenFetchAccountsIsCalled_thenAllAccountsAreReturned() {
         val refeshToken = Instancio.create(QuestradeRefreshToken::class.java)
-        val authToken = Instancio.create(AuthenticationToken::class.java)
+        val authToken = Instancio.of(AuthenticationToken::class.java)
+            .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().future() }
+            .create()
 
-        every { libQuestrade.authenticate(refeshToken.refresh_token) } returns authToken
-        every { libQuestrade.getAccounts(authToken) } returns Instancio.createSet(Account::class.java)
-        every { acctMapper.map(any()) } returns Instancio.createList(apiAccount::class.java)
+        every { libQuestrade.authenticate(refeshToken.refreshToken) } returns authToken
+        every { libQuestrade.getAccounts(authToken) } returns Instancio.ofSet(Account::class.java)
+            .generate(field(Account::clientAccountType), oneOf(ClientAccountType.Individual.name))
+            .generate(field(Account::status), oneOf(AccountStatus.Active.name, AccountStatus.Closed.name))
+            .generate(field(Account::type), oneOf(AccountType.RRSP.name, AccountType.TFSA.name))
+            .create()
 
         sut.connect(refeshToken)
         val myAccounts = sut.getAccounts()
@@ -109,15 +121,15 @@ class TradingServiceImplTests {
     fun givenExpiredAuthToken_whenAccountIsCalled_thenAuthenticationExpiredExceptionIsThrown() {
         val authErrMsg = "Auth expired test"
 
-        val refeshToken = Instancio.create(QuestradeRefreshToken::class.java)
+        val refreshToken = Instancio.create(QuestradeRefreshToken::class.java)
         val expiredAuthToken = Instancio.of(AuthenticationToken::class.java)
             .generate(field(AuthenticationToken::expires_at)) { gen: Generators -> gen.temporal().zonedDateTime().past() }
             .create()
 
-        every { libQuestrade.authenticate(refeshToken.refresh_token) } returns expiredAuthToken
-        every { libQuestrade.getAccounts(expiredAuthToken) } throws AuthenticationExpiredException(authErrMsg)
+        every { libQuestrade.authenticate(any()) } returns expiredAuthToken
+        every { libQuestrade.getAccounts(any()) } throws AuthenticationExpiredException(authErrMsg)
 
-        sut.connect(refeshToken)
+        sut.connect(refreshToken)
 
         assertThatExceptionOfType(AuthenticationExpiredException::class.java)
             .isThrownBy { sut.getAccounts() }

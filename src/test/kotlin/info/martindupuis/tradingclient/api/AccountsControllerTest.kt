@@ -20,11 +20,11 @@ class AccountsControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun getAccounts() {
-        val accounts = Instancio.createList(Account::class.java)
+        val accounts = Instancio.createSet(Account::class.java)
         every { service.isConnected() } returns true
         every { service.getAccounts() } returns accounts
 
-        mockMvc.get("/tradingclient/api/accounts").andExpectAll {
+        mockMvc.get("/tradingclient/api/accounts?refresh_token=abc123def").andExpectAll {
             status { isOk() }
             content { contentType(MediaType.APPLICATION_JSON) }
             jsonPath("$.length()") { value(accounts.size) }
