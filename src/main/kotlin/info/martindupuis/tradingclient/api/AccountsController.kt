@@ -5,7 +5,9 @@ import info.martindupuis.tradingclient.portsadapters.questradeclient.TradingServ
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.ZonedDateTime
 
 @RestController
 class AccountsController(val service: TradingService) {
@@ -17,7 +19,7 @@ class AccountsController(val service: TradingService) {
         if (!service.isConnected())
             service.connect(token)
 
-        val accounts = service.getAccounts
+        val accounts = service.getAccounts()
 
         return ResponseEntity.ok(accounts)
     }

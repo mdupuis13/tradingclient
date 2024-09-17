@@ -25,7 +25,7 @@ class TradingServiceImpl(
     }
 
     override fun connect(token: QuestradeRefreshToken) {
-        authenticationToken = tradingPlatform.authenticate(token.refresh_token)
+        authenticationToken = tradingPlatform.authenticate(token.refreshToken)
         log.info(authenticationToken.toString())
 
         if (authenticationToken.isValid)
