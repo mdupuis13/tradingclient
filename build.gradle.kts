@@ -38,13 +38,13 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    //implementation("org.projectlombok:lombok:1.18.28")
 
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
     testImplementation(kotlin("test"))
     testImplementation("org.amshove.kluent:kluent:1.73")
+
     // To get JUnit errors from kotlin.test, to e.g. enable diff windows in failure messages
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.21")
     testImplementation("com.h2database:h2")
