@@ -32,6 +32,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("com.h2database:h2")
 
+    // https://mvnrepository.com/artifact/org.zalando/logbook-core
+//    testImplementation("org.zalando:logbook-core:3.9.0")
+
     implementation(project(":lib:j-questrade"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 

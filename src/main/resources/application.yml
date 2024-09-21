@@ -21,3 +21,9 @@ info:
   martindupuis:
     jquestrade:
       loginUrl: https://login.questrade.com/
+
+#logging:
+#  level:
+#    org:
+#      zalando:
+#        logbook: TRACE
