@@ -43,6 +43,8 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
+    testImplementation("org.mapstruct:mapstruct:1.5.5.Final")
+
     kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
     testImplementation(kotlin("test"))
