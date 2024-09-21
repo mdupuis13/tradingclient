@@ -13,10 +13,10 @@ package info.martindupuis.tradingclient.model
  * The account properties documentation</a>
  */
 class Account(
-    type: AccountType,
-    number: String,
-    status: AccountStatus,
-    isPrimary: Boolean,
-    isBilling: Boolean,
-    clientAccountType: ClientAccountType
+    val type: AccountType,
+    val number: String,
+    val status: AccountStatus,
+    val isPrimary: Boolean,
+    val isBilling: Boolean,
+    val clientAccountType: ClientAccountType
 )

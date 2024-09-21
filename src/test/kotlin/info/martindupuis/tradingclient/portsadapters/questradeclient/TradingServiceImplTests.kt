@@ -1,10 +1,11 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 
-import info.martindupuis.jquestrade.Account
 import info.martindupuis.jquestrade.AuthenticationToken
+import info.martindupuis.jquestrade.QuestradeAccount
 import info.martindupuis.jquestrade.exceptions.AuthenticationException
 import info.martindupuis.jquestrade.exceptions.AuthenticationExpiredException
+import info.martindupuis.tradingclient.model.Account
 import info.martindupuis.tradingclient.model.AccountStatus
 import info.martindupuis.tradingclient.model.AccountType
 import info.martindupuis.tradingclient.model.ClientAccountType
@@ -105,16 +106,20 @@ class TradingServiceImplTests {
             .create()
 
         every { libQuestrade.authenticate(refeshToken.refreshToken) } returns authToken
-        every { libQuestrade.getAccounts(authToken) } returns Instancio.ofSet(Account::class.java)
-            .generate(field(Account::clientAccountType), oneOf(ClientAccountType.Individual.name))
-            .generate(field(Account::status), oneOf(AccountStatus.Active.name, AccountStatus.Closed.name))
-            .generate(field(Account::type), oneOf(AccountType.RRSP.name, AccountType.TFSA.name))
+        every { libQuestrade.getAccounts(authToken) } returns Instancio.ofSet(QuestradeAccount::class.java)
+            .set(field(QuestradeAccount::clientAccountType), ClientAccountType.Individual.name)
+            .generate(field(QuestradeAccount::status), oneOf(AccountStatus.Active.name, AccountStatus.Closed.name))
+            .generate(field(QuestradeAccount::type), oneOf(AccountType.RRSP.name, AccountType.TFSA.name))
             .create()
 
         sut.connect(refeshToken)
         val myAccounts = sut.getAccounts()
 
         assertThat(myAccounts.size).isGreaterThanOrEqualTo(1)
+        assertThat(myAccounts.first()).isNotNull
+
+        val anAccount: Account = myAccounts.first()
+        assertThat(anAccount.status).isNotNull
     }
 
     @Test
