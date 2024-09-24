@@ -7,7 +7,6 @@ import info.martindupuis.tradingclient.model.AccountActivity
 import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")
-interface AccountMapper {
-    fun map(source: QuestradeAccount): Account
-    fun map(source: Set<QuestradeAccount>): Set<Account>
+interface AccountActivitiesMapper {
+    fun map(source: Set<QuestradeActivity>): Set<AccountActivity>
 }
