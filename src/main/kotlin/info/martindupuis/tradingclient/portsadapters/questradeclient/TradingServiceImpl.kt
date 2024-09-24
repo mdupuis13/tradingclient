@@ -1,10 +1,12 @@
 package info.martindupuis.tradingclient.portsadapters.questradeclient
 
 import info.martindupuis.jquestrade.AuthenticationToken
+import info.martindupuis.jquestrade.QuestradeActivity
 import info.martindupuis.jquestrade.client.RequestPeriod
 import info.martindupuis.tradingclient.model.Account
 import info.martindupuis.tradingclient.model.AccountActivity
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
+import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountActivitiesMapper
 import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -15,7 +17,8 @@ import info.martindupuis.jquestrade.client.QuestradeWebClient as LibQuestrade
 @Service
 class TradingServiceImpl(
     private val tradingPlatform: LibQuestrade,
-    private val mapper: AccountMapper
+    private val accountMapper: AccountMapper,
+    private val accountActivitiesMapper: AccountActivitiesMapper
 ) : TradingService {
 
     private val log = LoggerFactory.getLogger(javaClass)
@@ -39,7 +42,7 @@ class TradingServiceImpl(
     override fun getAccounts(): Set<Account> {
         val qAccounts = tradingPlatform.getAccounts(authenticationToken)
 
-        return mapper.map(qAccounts)
+        return accountMapper.map(qAccounts)
     }
 
     override fun getAccountActivities(accountId: String, startDate: LocalDateTime, endDate: LocalDateTime): Set<AccountActivity> {
@@ -50,7 +53,26 @@ class TradingServiceImpl(
 
         val requestPeriod = RequestPeriod(startDate.atZone(ZoneId.systemDefault()), endDate.atZone(ZoneId.systemDefault()))
 
-        val acctActivities = tradingPlatform.getAccountActivities(authenticationToken, qAccount, requestPeriod)
-        return mapper.map(acctActivities)
+        val acctActivities: MutableSet<QuestradeActivity> = mutableSetOf()
+
+        var nextPeriodStart = requestPeriod.periodStart
+        var nbDaysLeft = requestPeriod.numberDaysInBetween()
+
+        do {
+            val nbDaysInPeriod: Long = if (nbDaysLeft < 30) nbDaysLeft else 30
+            val period = RequestPeriod(nextPeriodStart, nextPeriodStart.plusDays(nbDaysInPeriod))
+
+            nextPeriodStart = nextPeriodStart.plusDays(nbDaysInPeriod+1)
+
+            val activities = tradingPlatform.getAccountActivities(authenticationToken, qAccount, period)
+            acctActivities.addAll(activities)
+
+            log.info(activities.sortedBy { act -> act.transactionDate }.toString())
+
+            nbDaysLeft -= nbDaysInPeriod
+
+        } while (nbDaysLeft / 30 >= 1)
+
+        return accountActivitiesMapper.map(acctActivities)
     }
 }

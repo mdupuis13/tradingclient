@@ -10,6 +10,4 @@ import org.mapstruct.Mapper
 interface AccountMapper {
     fun map(source: QuestradeAccount): Account
     fun map(source: Set<QuestradeAccount>): Set<Account>
-
-    fun map(source: Set<QuestradeActivity>): Set<AccountActivity>
 }

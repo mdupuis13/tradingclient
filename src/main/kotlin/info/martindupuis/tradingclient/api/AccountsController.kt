@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
@@ -25,13 +26,15 @@ class AccountsController(val service: TradingService) {
     }
 
     @GetMapping("/tradingclient/api/accounts/{account_id}/activities")
-    fun getAccountActivitiess(@PathVariable account_id: String,
-                              @RequestParam("refresh_token") refreshToken: String,
-                              @RequestParam("start_date") startDate: LocalDateTime,
-                              @RequestParam("end_date") endDate: LocalDateTime): ResponseEntity<Set<AccountActivity>> {
+    fun getAccountActivitiess(
+        @PathVariable account_id: String,
+        @RequestParam("refresh_token") refreshToken: String,
+        @RequestParam("start_date") startDate: LocalDate,
+        @RequestParam("end_date") endDate: LocalDate
+    ): ResponseEntity<Set<AccountActivity>> {
         verifyConnection(refreshToken)
 
-        val activities = service.getAccountActivities(account_id,startDate,endDate)
+        val activities = service.getAccountActivities(account_id, startDate.atStartOfDay(), endDate.atStartOfDay())
 
         return ResponseEntity.ok(activities)
     }
