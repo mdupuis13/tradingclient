@@ -35,9 +35,8 @@ class TradingServiceImplTests {
     @MockK
     lateinit var libQuestrade: LibQuestrade
 
-    @MockK
-    lateinit var acctMapper: AccountMapper
-    lateinit var acctActvMapper: AccountActivitiesMapper
+    private lateinit var acctMapper: AccountMapper
+    private lateinit var acctActvMapper: AccountActivitiesMapper
 
     private lateinit var sut: TradingService
 
