@@ -52,26 +52,13 @@ class TradingServiceImpl(
             throw IllegalArgumentException("TradingClient: Account not found !")
 
         val requestPeriod = RequestPeriod(startDate.atZone(ZoneId.systemDefault()), endDate.atZone(ZoneId.systemDefault()))
-
         val acctActivities: MutableSet<QuestradeActivity> = mutableSetOf()
 
-        var nextPeriodStart = requestPeriod.periodStart
-        var nbDaysLeft = requestPeriod.numberDaysInBetween()
+        requestPeriod.splitIntoPeriodsOfXDays(29).forEach {
+            val actv = tradingPlatform.getAccountActivities(authenticationToken, qAccount, it)
 
-        do {
-            val nbDaysInPeriod: Long = if (nbDaysLeft < 30) nbDaysLeft else 30
-            val period = RequestPeriod(nextPeriodStart, nextPeriodStart.plusDays(nbDaysInPeriod))
-
-            nextPeriodStart = nextPeriodStart.plusDays(nbDaysInPeriod+1)
-
-            val activities = tradingPlatform.getAccountActivities(authenticationToken, qAccount, period)
-            acctActivities.addAll(activities)
-
-            log.info(activities.sortedBy { act -> act.transactionDate }.toString())
-
-            nbDaysLeft -= nbDaysInPeriod
-
-        } while (nbDaysLeft / 30 >= 1)
+            acctActivities.addAll(actv)
+        }
 
         return accountActivitiesMapper.map(acctActivities)
     }
