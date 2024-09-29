@@ -10,6 +10,7 @@ import info.martindupuis.tradingclient.model.AccountStatus
 import info.martindupuis.tradingclient.model.AccountType
 import info.martindupuis.tradingclient.model.ClientAccountType
 import info.martindupuis.tradingclient.portsadapters.questradeclient.entities.QuestradeRefreshToken
+import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountActivitiesMapper
 import info.martindupuis.tradingclient.portsadapters.questradeclient.mapping.AccountMapper
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -34,8 +35,8 @@ class TradingServiceImplTests {
     @MockK
     lateinit var libQuestrade: LibQuestrade
 
-    @MockK
-    lateinit var acctMapper: AccountMapper
+    private lateinit var acctMapper: AccountMapper
+    private lateinit var acctActvMapper: AccountActivitiesMapper
 
     private lateinit var sut: TradingService
 
@@ -45,8 +46,9 @@ class TradingServiceImplTests {
 
         // real implementation of the mapper so that we can test it
         acctMapper = Mappers.getMapper(AccountMapper::class.java)
+        acctActvMapper = Mappers.getMapper(AccountActivitiesMapper::class.java)
 
-        sut = TradingServiceImpl(libQuestrade, acctMapper)
+        sut = TradingServiceImpl(libQuestrade, acctMapper, acctActvMapper)
     }
 
     @Nested
